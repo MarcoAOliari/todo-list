@@ -9,5 +9,7 @@ CREATE TABLE todolists (
 CREATE TABLE tasks (
     id SERIAL,
     title VARCHAR(200) NOT NULL,
-    PRIMARY KEY(id)
+    todolist_id INTEGER NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY(todolist_id) REFERENCES todolists(id)
 );

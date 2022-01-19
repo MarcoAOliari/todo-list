@@ -1,8 +1,8 @@
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
 
 const express = require('express');
 
-const testRoute = require('./routes/hello');
+const TodoListRoutes = require('./routes/TodoList');
 
 const app = express();
 
@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // rotas
-app.use(testRoute);
+app.use(TodoListRoutes);
 
 // servidor online
 app.listen(process.env.API_PORT || 3000, () => {
