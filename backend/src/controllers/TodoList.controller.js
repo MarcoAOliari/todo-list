@@ -10,7 +10,7 @@ module.exports = {
 
             res.status(200).json({
                 todolists: results.rows
-            })
+            });
         } catch (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
@@ -32,7 +32,29 @@ module.exports = {
     
             res.status(200).json({
                 todolist: results.rows[0]
-            })
+            });
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json("Falha interna do servidor");
+        }
+    },
+
+    async show(req, res) {
+        let { id } = req.params;
+
+        try {
+            const results = await db.query(
+                'SELECT * FROM tasks WHERE todolist_id = ($1)',
+                [id]
+            );
+
+            if (!results.rowCount) {
+                return res.status(204).json();
+            }
+
+            return res.status(200).json({
+                tasks: results.rows
+            });
         } catch (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");

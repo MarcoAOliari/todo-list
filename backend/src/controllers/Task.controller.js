@@ -29,11 +29,9 @@ module.exports = {
                 return res.status(400).json(`To-do list de id ${id} não existe`);
             }
 
-            console.log(results)
-
             res.status(200).json({
                 task: results.rows[0]
-            })
+            });
         } catch (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
