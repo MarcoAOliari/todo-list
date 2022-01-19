@@ -3,7 +3,18 @@ const { query } = require('express');
 
 module.exports = {
     async index(req, res) {
-        return res.status(200).json("FUNCIONOU DE NOVO");
+        try {
+            const results = await db.query(
+                'SELECT * FROM todolists'
+            );
+
+            res.status(200).json({
+                todolists: results.rows
+            })
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json("Falha interna do servidor");
+        }
     },
 
     async store(req, res) {
