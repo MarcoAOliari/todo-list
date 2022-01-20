@@ -31,7 +31,7 @@ function TodoLists() {
 
         async function postList(title) {
             try {
-                const response = await api.post('/todolist', {
+                await api.post('/todolist', {
                     title: title
                 });
 
@@ -51,6 +51,18 @@ function TodoLists() {
             return;
         }
 
+        async function putList(listId, newValue) {
+            try {
+                await api.put(`/todolist/${listId}`, {
+                    title: newValue.title
+                });
+
+            } catch (err) {
+                console.log('Erro inesperado');
+            }
+        }
+        
+        putList(listId, newValue);
         setLists(prev => prev.map(item => (item.id === listId ? newValue : item)));
     }
 

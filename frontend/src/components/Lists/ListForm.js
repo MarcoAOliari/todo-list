@@ -30,7 +30,7 @@ function ListForm(props) {
                 <>
                     <input
                     type="text" 
-                    placeholder="Adicione uma Lista" value={input}
+                    placeholder="Edite uma Lista" value={input}
                     name="text" 
                     className="todo-input" 
                     onChange={handleChange}
@@ -42,7 +42,7 @@ function ListForm(props) {
                 <>
                     <input
                     type="text" 
-                    placeholder="Adicione uma Tarefa" value={input}
+                    placeholder="Adicione uma Lista" value={input}
                     name="text" 
                     className="todo-input" 
                     onChange={handleChange}

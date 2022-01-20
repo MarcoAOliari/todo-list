@@ -12,5 +12,5 @@ CREATE TABLE tasks (
     completed BOOLEAN DEFAULT false,
     todolist_id INTEGER NOT NULL,
     PRIMARY KEY(id),
-    FOREIGN KEY(todolist_id) REFERENCES todolists(id)
+    FOREIGN KEY(todolist_id) REFERENCES todolists(id) ON DELETE CASCADE;
 );
