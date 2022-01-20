@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { RiCloseCircleLine } from 'react-icons/ri';
-import { TiEdit } from 'react-icons/ti';
+import { TiEdit, TiArrowRightThick } from 'react-icons/ti';
 import ListForm from './ListForm';
 
 function List({ lists, removeList, updateList }) {
@@ -38,6 +39,11 @@ function List({ lists, removeList, updateList }) {
                     onClick={() => setEdit({ id: list.id, value: list.title })}
                     className='edit-icon'
                 />
+                <Link to={`/todo/${list.id}`}>
+                    <TiArrowRightThick
+                        className='redirect-icon'
+                    />
+                </Link>
             </div>
         </div>
     ));
