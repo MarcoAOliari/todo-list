@@ -1,12 +1,19 @@
 import './App.css';
-import TodoList from './components/TodoList';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Tasks from './components/pages/Tasks';
+import Lists from './components/pages/Lists';
 
 function App() {
-  return (
-    <div className="todo-app">
-      <TodoList />
-    </div>
-  );
+    return (
+		<>
+			<Router>
+				<Routes>
+					<Route path='/' exact element={<Lists />}/>
+					<Route path='/todo/:id' element={<Tasks />}/>
+				</Routes>
+			</Router>
+		</>
+    );
 }
 
 export default App;
