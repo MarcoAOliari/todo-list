@@ -6,5 +6,6 @@ const TaskController = require('../controllers/Task.controller');
 router.post('/todolist/:id/task', TaskController.store);
 router.delete('/task/:id', TaskController.delete);
 router.put('/task/:id/status', TaskController.updateStatus);
+router.put('/task/:id/title', TaskController.updateTitle);
 
 module.exports = router;

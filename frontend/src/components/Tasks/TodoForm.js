@@ -12,10 +12,17 @@ function TodoForm(props) {
     const handleSubmit = e => {
         e.preventDefault();
 
-        props.onSubmit({
-            title: input
-        })
-
+        if (props.edit) {
+            props.onSubmit({
+                id: props.edit.id,
+                title: input
+            })
+        } else {
+            props.onSubmit({
+                title: input
+            })
+        }
+            
         setInput('');
     }
 
@@ -29,7 +36,7 @@ function TodoForm(props) {
                 <>
                     <input
                     type="text" 
-                    placeholder="Adicione uma Tarefa" value={input}
+                    placeholder="Atualize uma Tarefa" value={input}
                     name="text" 
                     className="todo-input" 
                     onChange={handleChange}

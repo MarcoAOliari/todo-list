@@ -74,5 +74,33 @@ module.exports = {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
         }
+    },
+
+    async updateTitle(req, res) {
+        let { id } = req.params;
+        let { title } = req.body;
+
+        if (!title) {
+            return res.status(400).json('Envie um título válido no próximo request');
+        }
+
+        try {
+            const results = await db.query(
+                'UPDATE tasks SET title = ($1) WHERE id = ($2) RETURNING *',
+                [title, id]
+            )
+
+            if (!results.rowCount) {
+                return res.status(204).json();
+            }
+
+            return res.status(200).json({
+                todolist: results.rows[0]
+            });
+
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json("Falha interna do servidor");
+        }
     }
 }

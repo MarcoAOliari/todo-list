@@ -31,11 +31,11 @@ function TodoLists() {
 
         async function postList(title) {
             try {
-                await api.post('/todolist', {
+                const response = await api.post('/todolist', {
                     title: title
                 });
 
-                const newLists = [...lists, list]
+                const newLists = [...lists, response.data.todolist]
 
                 setLists(newLists);
             } catch (err) {

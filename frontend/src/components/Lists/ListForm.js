@@ -12,9 +12,16 @@ function ListForm(props) {
     const handleSubmit = e => {
         e.preventDefault();
 
-        props.onSubmit({
-            title: input
-        })
+        if (props.edit) {
+            props.onSubmit({
+                id: props.edit.id,
+                title: input
+            })
+        } else {
+            props.onSubmit({
+                title: input
+            })
+        }
 
         setInput('');
     }

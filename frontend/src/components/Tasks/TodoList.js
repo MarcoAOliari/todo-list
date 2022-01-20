@@ -36,11 +36,11 @@ function TodoList() {
 
         async function postTodo(title) {
             try {
-                await api.post(`/todolist/${id}/task`, {
+                const response = await api.post(`/todolist/${id}/task`, {
                     title: title
                 });
 
-                const newTodos = [...todos, todo]
+                const newTodos = [...todos, response.data.task]
 
                 setTodos(newTodos);
             } catch (err) {
@@ -56,7 +56,19 @@ function TodoList() {
             return;
         }
 
-        setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
+        async function putTodo(todoId, newValue) {
+            try {
+                await api.put(`/task/${todoId}/title`, {
+                    title: newValue.title
+                });
+
+                setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
+            } catch (err) {
+                console.log('Erro inesperado');
+            }
+        }
+        
+        putTodo(todoId, newValue);
     }
 
     const removeTodo = id => {
