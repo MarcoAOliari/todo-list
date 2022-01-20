@@ -43,17 +43,23 @@ module.exports = {
         let { id } = req.params;
 
         try {
-            const results = await db.query(
+            const todoResults = await db.query(
+                'SELECT * FROM todolists WHERE id = ($1)',
+                [id]
+            );
+            
+            if (!todoResults.rowCount) {
+                return res.status(400).json(`To-do list de id ${id} não existe`);
+            }
+
+            const taskResults = await db.query(
                 'SELECT * FROM tasks WHERE todolist_id = ($1)',
                 [id]
             );
 
-            if (!results.rowCount) {
-                return res.status(204).json();
-            }
-
             return res.status(200).json({
-                tasks: results.rows
+                todoTitle: todoResults.rows[0].title,
+                tasks: taskResults.rows
             });
         } catch (err) {
             console.log(err);

@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
+
+import api from '../../services/api';
+
 import TodoForm from './TodoForm';
 import Todo from './Todo';
 
 function TodoList() {
     const [todos, setTodos] = useState([]);
+    const [todoTitle, setTodoTitle] = useState('');
+    const { id } = useParams();
     
+    useEffect(() => {
+
+        async function getLists() {
+            try {
+                const response = await api.get(`/todolist/${id}`);
+                
+                if (response.status === 200) {
+                    setTodos(response.data.tasks);
+                    setTodoTitle(response.data.todoTitle);
+                }
+            } catch (err) {
+                console.log('Erro inesperado');
+            }
+        }
+
+        getLists();
+    }, [id])
+
     const addTodo = todo => {
-        if (!todo.text || /^\s*$/.test(todo.text)) {
+        if (!todo.title || /^\s*$/.test(todo.title)) {
             return;
         }
 
@@ -16,7 +40,7 @@ function TodoList() {
     }
 
     const updateTodo = (todoId, newValue) => {
-        if (!newValue.text || /^\s*$/.test(newValue.text)) {
+        if (!newValue.title || /^\s*$/.test(newValue.title)) {
             return;
         }
 
@@ -32,7 +56,7 @@ function TodoList() {
     const completeTodo = id => {
         let updatedTodos = todos.map(todo => {
             if (todo.id === id) {
-                todo.isComplete = !todo.isComplete;
+                todo.completed = !todo.completed;
             }
 
             return todo;
@@ -43,7 +67,7 @@ function TodoList() {
 
     return (
         <div>
-            <h1>Planos de hoje</h1>
+            <h1>{todoTitle ? todoTitle : '  - '}</h1>
             <TodoForm onSubmit={addTodo} />
             <Todo 
                 todos={todos} 
