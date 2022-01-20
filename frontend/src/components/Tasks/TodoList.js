@@ -84,12 +84,22 @@ function TodoList() {
             return todo;
         });
 
-        setTodos(updatedTodos);
+        async function updateTaskStatus(id) {
+            try {
+                await api.put(`/task/${id}/status`);
+
+                setTodos(updatedTodos);
+            } catch (err) {
+                console.log('Erro inesperado');
+            }
+        }
+
+        updateTaskStatus(id);
     }
 
     return (
         <div>
-            <h1>{todoTitle ? todoTitle : '  - '}</h1>
+            <h1>{todoTitle ? todoTitle : ' - '}</h1>
             <TodoForm onSubmit={addTodo} />
             <Todo 
                 todos={todos} 

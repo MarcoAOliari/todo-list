@@ -53,7 +53,7 @@ module.exports = {
             }
 
             const taskResults = await db.query(
-                'SELECT * FROM tasks WHERE todolist_id = ($1)',
+                'SELECT * FROM tasks WHERE todolist_id = ($1) ORDER BY id',
                 [id]
             );
 

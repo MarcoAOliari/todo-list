@@ -52,5 +52,27 @@ module.exports = {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
         }
+    },
+
+    async updateStatus(req, res) {
+        try {
+            let { id } = req.params;
+
+            const results = await db.query(
+                'UPDATE tasks SET completed = NOT completed WHERE id = ($1) RETURNING *',
+                [id]
+            );
+
+            if (!results.rowCount) {
+                return res.status(204).json();
+            }
+
+            return res.status(200).json({
+                task: results.rows[0]
+            });
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json("Falha interna do servidor");
+        }
     }
 }
