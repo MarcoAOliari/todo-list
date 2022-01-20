@@ -47,8 +47,6 @@ function TodoList() {
                 console.log('Erro inesperado');
             }
         }
-
-        console.log('entrei');
         
         postTodo(todo.title);
     }
@@ -64,7 +62,17 @@ function TodoList() {
     const removeTodo = id => {
         const removeArr = [...todos].filter(todo => todo.id !== id);
 
-        setTodos(removeArr);
+        async function deleteTask(id) {
+            try {
+                await api.delete(`/task/${id}`);
+
+                setTodos(removeArr);
+            } catch (err) {
+                console.log('Erro inesperado');
+            }
+        }
+
+        deleteTask(id);
     }
 
     const completeTodo = id => {
