@@ -34,9 +34,23 @@ function TodoList() {
             return;
         }
 
-        const newTodos = [todo, ...todos]
+        async function postTodo(title) {
+            try {
+                await api.post(`/todolist/${id}/task`, {
+                    title: title
+                });
 
-        setTodos(newTodos);
+                const newTodos = [...todos, todo]
+
+                setTodos(newTodos);
+            } catch (err) {
+                console.log('Erro inesperado');
+            }
+        }
+
+        console.log('entrei');
+        
+        postTodo(todo.title);
     }
 
     const updateTodo = (todoId, newValue) => {
