@@ -87,5 +87,25 @@ module.exports = {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
         }
+    },
+
+    async delete(req, res) {
+        try {
+            let { id } = req.params;
+
+            const result = await db.query(
+                'DELETE FROM todolists WHERE id = ($1)',
+                [id]
+            );
+
+            if (!result.rowCount) {
+                return res.status(400).json(`To-do list de id ${id} não existe`);
+            }
+
+            return res.status(200).json();
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json("Falha interna do servidor");
+        }
     }
 }

@@ -57,19 +57,29 @@ function TodoLists() {
                     title: newValue.title
                 });
 
+                setLists(prev => prev.map(item => (item.id === listId ? newValue : item)));
             } catch (err) {
                 console.log('Erro inesperado');
             }
         }
         
         putList(listId, newValue);
-        setLists(prev => prev.map(item => (item.id === listId ? newValue : item)));
     }
 
     const removeList = id => {
         const removeArr = [...lists].filter(list => list.id !== id);
 
-        setLists(removeArr);
+        async function deleteList(id) {
+            try {
+                await api.delete(`/todolist/${id}`);
+
+                setLists(removeArr);
+            } catch (err) {
+                console.log('Erro inesperado');
+            }
+        }
+
+        deleteList(id);
     }
 
     return (
