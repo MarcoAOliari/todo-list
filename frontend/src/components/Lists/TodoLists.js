@@ -1,55 +1,73 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import api from '../../services/api';
+
 import ListForm from './ListForm';
 import List from './List';
 
 function TodoLists() {
-    const [todos, setTodos] = useState([]);
-    
-    const addTodo = todo => {
-        if (!todo.text || /^\s*$/.test(todo.text)) {
-            return;
-        }
+    const [lists, setLists] = useState([]);
 
-        const newTodos = [todo, ...todos]
-
-        setTodos(newTodos);
-    }
-
-    const updateTodo = (todoId, newValue) => {
-        if (!newValue.text || /^\s*$/.test(newValue.text)) {
-            return;
-        }
-
-        setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
-    }
-
-    const removeTodo = id => {
-        const removeArr = [...todos].filter(todo => todo.id !== id);
-
-        setTodos(removeArr);
-    }
-
-    const completeTodo = id => {
-        let updatedTodos = todos.map(todo => {
-            if (todo.id === id) {
-                todo.isComplete = !todo.isComplete;
+    useEffect(() => {
+        async function getLists() {
+            try {
+                const response = await api.get('/todolist');
+                
+                if (response.status === 200) {
+                    setLists(response.data.todolists);
+                }
+            } catch (err) {
+                console.log('Erro inesperado');
             }
+        }
 
-            return todo;
-        });
+        getLists();
+    }, [])
+    
+    const addList = list => {
+        if (!list.title || /^\s*$/.test(list.title)) {
+            return;
+        }
 
-        setTodos(updatedTodos);
+        async function postList(title) {
+            try {
+                const response = await api.post('/todolist', {
+                    title: title
+                });
+
+                const newLists = [...lists, list]
+
+                setLists(newLists);
+            } catch (err) {
+                console.log('Erro inesperado');
+            }
+        }
+
+        postList(list.title);
+    }
+
+    const updateList = (listId, newValue) => {
+        if (!newValue.title || /^\s*$/.test(newValue.title)) {
+            return;
+        }
+
+        setLists(prev => prev.map(item => (item.id === listId ? newValue : item)));
+    }
+
+    const removeList = id => {
+        const removeArr = [...lists].filter(list => list.id !== id);
+
+        setLists(removeArr);
     }
 
     return (
         <div>
             <h1>To-do Lists</h1>
-            <ListForm onSubmit={addTodo} />
+            <ListForm onSubmit={addList} />
             <List 
-                todos={todos} 
-                completeTodo={completeTodo} 
-                removeTodo={removeTodo}
-                updateTodo={updateTodo}
+                lists={lists} 
+                removeList={removeList}
+                updateList={updateList}
             />
         </div>
     );

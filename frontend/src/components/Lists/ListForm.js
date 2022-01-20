@@ -14,7 +14,7 @@ function ListForm(props) {
 
         props.onSubmit({
             id: Math.floor(Math.random() * 10000),
-            text: input
+            title: input
         })
 
         setInput('');
@@ -30,7 +30,7 @@ function ListForm(props) {
                 <>
                     <input
                     type="text" 
-                    placeholder="Adicione uma Tarefa" value={input}
+                    placeholder="Adicione uma Lista" value={input}
                     name="text" 
                     className="todo-input" 
                     onChange={handleChange}
