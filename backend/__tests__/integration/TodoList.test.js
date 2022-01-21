@@ -53,7 +53,7 @@ describe('GET /todolist/:id', () => {
 
     it('deveria retornar código 400 (id inválido)', async () => {
         const response = await request(app)
-            .get('/todolist/asdasdad');
+            .get('/todolist/idinvalido');
 
         expect(response.status).toBe(400);
     });
@@ -93,7 +93,7 @@ describe('PUT /todolist/:id', () => {
 
     it('deveria retornar código 400 (id inválido)', async () => {
         const response = await request(app)
-            .put('/todolist/asdads')
+            .put('/todolist/idinvalido')
             .send({
                 title: undefined
             });
@@ -112,7 +112,7 @@ describe('DELETE /todolist/:id', () => {
 
     it('deveria retornar código 400 (id inválido)', async () => {
         const response = await request(app)
-            .delete('/todolist/asdasd');
+            .delete('/todolist/idinvalido');
 
         expect(response.status).toBe(400);
     });

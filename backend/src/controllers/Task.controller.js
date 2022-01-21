@@ -6,6 +6,10 @@ module.exports = {
         let { id } = req.params;
         let { title } = req.body;
 
+        if (isNaN(id)) {
+            return res.status(400).json("Envie um id válido no próximo request!");
+        }
+
         if (!title) {
             return res.status(400).json('Envie um título válido no próximo request');
         }
@@ -38,6 +42,10 @@ module.exports = {
         try {
             let { id } = req.params;
 
+            if (isNaN(id)) {
+                return res.status(400).json("Envie um id válido no próximo request!");
+            }
+
             const result = await db.query(
                 'DELETE FROM tasks WHERE id = ($1)',
                 [id]
@@ -57,6 +65,10 @@ module.exports = {
     async updateStatus(req, res) {
         try {
             let { id } = req.params;
+
+            if (isNaN(id)) {
+                return res.status(400).json("Envie um id válido no próximo request!");
+            }
 
             const results = await db.query(
                 'UPDATE tasks SET completed = NOT completed WHERE id = ($1) RETURNING *',
@@ -79,6 +91,10 @@ module.exports = {
     async updateTitle(req, res) {
         let { id } = req.params;
         let { title } = req.body;
+
+        if (isNaN(id)) {
+            return res.status(400).json("Envie um id válido no próximo request!");
+        }
 
         if (!title) {
             return res.status(400).json('Envie um título válido no próximo request');

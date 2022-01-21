@@ -32,12 +32,29 @@ describe('POST /todolist/:id/task', () => {
 
         expect(response.status).toBe(400);
     });
+
+    it('deveria retornar código 400 (id inválido)', async () => {
+        const response = await request(app)
+        .post('/todolist/idinvalido/task') /////////////
+        .send({
+            title: undefined
+        });
+
+        expect(response.status).toBe(400);
+    });
 });
 
 describe('DELETE /task/:id', () => {
     it('deveria retornar código 400 (id inexistente no banco)', async () => {
         const response = await request(app)
             .delete('/task/1000');
+
+        expect(response.status).toBe(400);
+    });
+
+    it('deveria retornar código 400 (id inválido)', async () => {
+        const response = await request(app)
+            .delete('/task/idinvalido');
 
         expect(response.status).toBe(400);
     });
@@ -63,6 +80,16 @@ describe('PUT /task/:id/status', () => {
             });
         
         expect(response.status).toBe(204);
+    });
+
+    it('deveria retornar código 400 (id inválido)', async () => {
+        const response = await request(app)
+            .put('/task/idinvalido/status')
+            .send({
+                title: 'title'
+            });
+        
+        expect(response.status).toBe(400);
     });
 });
 
@@ -90,7 +117,17 @@ describe('PUT /task/:id/title', () => {
 
     it('deveria retornar código 400 (título inválido)', async () => {
         const response = await request(app)
-            .put('/todolist/1000')
+            .put('/task/1000/title')
+            .send({
+                title: undefined
+            });
+        
+            expect(response.status).toBe(400);
+    });
+
+    it('deveria retornar código 400 (id inválido)', async () => {
+        const response = await request(app)
+            .put('/task/idinvalido/title')
             .send({
                 title: undefined
             });
