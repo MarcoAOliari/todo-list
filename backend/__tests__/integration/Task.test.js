@@ -11,6 +11,7 @@ describe('POST /todolist/:id/task', () => {
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('task');
+        expect(response.body.task.title).toEqual('title');
     });
 
     it('deveria retornar código 400 (título inválido)', async () => {
@@ -45,6 +46,20 @@ describe('POST /todolist/:id/task', () => {
 });
 
 describe('DELETE /task/:id', () => {
+    it('deveria remover a task do banco de dados', async () => {
+        const task = await request(app)
+            .post('/todolist/1/task')
+            .send({
+                title: 'title'
+            });
+        
+        const response = await request(app)
+            .del(`/task/${task.body.task.id}`)
+
+        expect(response.status).toBe(200);
+        expect(response.body.task.id).toBe(task.body.task.id);
+    });
+
     it('deveria retornar código 400 (id inexistente no banco)', async () => {
         const response = await request(app)
             .delete('/task/1000');
@@ -103,6 +118,7 @@ describe('PUT /task/:id/title', () => {
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('task');
+        expect(response.body.task.title).toEqual('teste');
     });
 
     it('deveria retornar código 204 (id não cadastrado no banco)', async () => {

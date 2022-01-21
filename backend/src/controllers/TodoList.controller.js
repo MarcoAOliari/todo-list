@@ -112,7 +112,7 @@ module.exports = {
             }
 
             const result = await db.query(
-                'DELETE FROM todolists WHERE id = ($1)',
+                'DELETE FROM todolists WHERE id = ($1) RETURNING *',
                 [id]
             );
 
@@ -120,7 +120,9 @@ module.exports = {
                 return res.status(400).json(`To-do list de id ${id} não existe`);
             }
 
-            return res.status(200).json();
+            return res.status(200).json({
+                todolist: result.rows[0]
+            });
         } catch (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");

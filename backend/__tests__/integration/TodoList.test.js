@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('../../src/app');
+const db = require('../../src/db');
 
 describe('GET /todolist', () => {
     it('deveria retornar todas as todo-lists', async () => {
@@ -21,6 +22,8 @@ describe('POST /todolist', () => {
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('todolist');
+        expect(response.body.todolist).toHaveProperty('id');
+        expect(response.body.todolist.title).toEqual('title');
     });
 
     it('deveria retornar código 400', async () => {
@@ -69,6 +72,7 @@ describe('PUT /todolist/:id', () => {
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('todolist');
+        expect(response.body.todolist.title).toEqual('teste');
     });
 
     it('deveria retornar código 204', async () => {
@@ -78,7 +82,7 @@ describe('PUT /todolist/:id', () => {
                 title: 'teste'
             });
         
-            expect(response.status).toBe(204);
+        expect(response.status).toBe(204);
     });
 
     it('deveria retornar código 400 (id não existe no banco)', async () => {
@@ -88,7 +92,7 @@ describe('PUT /todolist/:id', () => {
                 title: undefined
             });
         
-            expect(response.status).toBe(400);
+        expect(response.status).toBe(400);
     });
 
     it('deveria retornar código 400 (id inválido)', async () => {
@@ -98,11 +102,25 @@ describe('PUT /todolist/:id', () => {
                 title: undefined
             });
         
-            expect(response.status).toBe(400);
+        expect(response.status).toBe(400);
     });
 });
 
 describe('DELETE /todolist/:id', () => {
+    it('deveria remover a to-do list do banco de dados', async () => {
+        const todoList = await request(app)
+            .post('/todolist')
+            .send({
+                title: 'title'
+            });
+        
+        const response = await request(app)
+            .del(`/todolist/${todoList.body.todolist.id}`)
+
+        expect(response.status).toBe(200);
+        expect(response.body.todolist.id).toBe(todoList.body.todolist.id);
+    });
+
     it('deveria retornar código 400 (id inexistente no banco)', async () => {
         const response = await request(app)
             .delete('/todolist/1000');

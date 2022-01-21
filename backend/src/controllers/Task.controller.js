@@ -47,7 +47,7 @@ module.exports = {
             }
 
             const result = await db.query(
-                'DELETE FROM tasks WHERE id = ($1)',
+                'DELETE FROM tasks WHERE id = ($1) RETURNING *',
                 [id]
             );
 
@@ -55,7 +55,9 @@ module.exports = {
                 return res.status(400).json(`Task de id ${id} não existe`);
             }
 
-            return res.status(200).json();
+            return res.status(200).json({
+                task: result.rows[0]
+            });
         } catch (err) {
             console.log(err);
             return res.status(500).json("Falha interna do servidor");
