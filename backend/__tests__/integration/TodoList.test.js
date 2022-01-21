@@ -37,7 +37,7 @@ describe('POST /todolist', () => {
 describe('GET /todolist/:id', () => {
     it('deveria retornar todas as tasks de uma to-do list', async () => {
         const response = await request(app)
-            .get('/todolist/8'); //////////////////////
+            .get('/todolist/1');
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('todoTitle');
@@ -62,7 +62,7 @@ describe('GET /todolist/:id', () => {
 describe('PUT /todolist/:id', () => {
     it('deveria retornar a to-do list com título atualizado', async () => {
         const response = await request(app)
-            .put('/todolist/8') ////////
+            .put('/todolist/1')
             .send({
                 title: 'teste'
             });

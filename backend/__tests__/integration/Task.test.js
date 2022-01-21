@@ -4,7 +4,7 @@ const app = require('../../src/app');
 describe('POST /todolist/:id/task', () => {
     it('deveria cadastrar uma nova task em uma todo-list', async () => {
         const response = await request(app)
-            .post('/todolist/8/task') /////////////
+            .post('/todolist/1/task')
             .send({
                 title: 'title'
             });
@@ -15,7 +15,7 @@ describe('POST /todolist/:id/task', () => {
 
     it('deveria retornar código 400 (título inválido)', async () => {
         const response = await request(app)
-        .post('/todolist/8/task') /////////////
+        .post('/todolist/1/task')
         .send({
             title: undefined
         });
@@ -25,7 +25,7 @@ describe('POST /todolist/:id/task', () => {
 
     it('deveria retornar código 400 (id não presente no banco)', async () => {
         const response = await request(app)
-        .post('/todolist/1000/task') /////////////
+        .post('/todolist/1000/task')
         .send({
             title: 'title'
         });
@@ -35,7 +35,7 @@ describe('POST /todolist/:id/task', () => {
 
     it('deveria retornar código 400 (id inválido)', async () => {
         const response = await request(app)
-        .post('/todolist/idinvalido/task') /////////////
+        .post('/todolist/idinvalido/task')
         .send({
             title: undefined
         });
@@ -63,7 +63,7 @@ describe('DELETE /task/:id', () => {
 describe('PUT /task/:id/status', () => {
     it('deveria retornar código 200', async () => {
         const response = await request(app)
-            .put('/task/10/status') //////////////
+            .put('/task/1/status')
             .send({
                 title: 'title'
             });
@@ -96,13 +96,13 @@ describe('PUT /task/:id/status', () => {
 describe('PUT /task/:id/title', () => {
     it('deveria retornar a to-do list com título atualizado', async () => {
         const response = await request(app)
-            .put('/task/10/title') ////////
+            .put('/task/1/title')
             .send({
                 title: 'teste'
             });
 
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('task'); ////////
+        expect(response.body).toHaveProperty('task');
     });
 
     it('deveria retornar código 204 (id não cadastrado no banco)', async () => {
