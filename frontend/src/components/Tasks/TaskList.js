@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
+import { TiArrowLeftThick } from 'react-icons/ti';
 
 import api from '../../services/api';
 
@@ -111,7 +113,12 @@ function TodoList() {
 
     return (
         <div>
-            <h1>{todoTitle ? todoTitle : ' - '}</h1>
+            <Link to={'/'}>
+                <TiArrowLeftThick
+                    className='back-icon'
+                />
+            </Link>
+            <h1 className="tasklist-title">{todoTitle ? todoTitle : ' - '}</h1>
             <TaskForm onSubmit={addTodo} />
             <Task 
                 todos={todos} 

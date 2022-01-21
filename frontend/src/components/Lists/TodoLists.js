@@ -84,7 +84,7 @@ function TodoLists() {
 
     return (
         <div>
-            <h1>To-do Lists</h1>
+            <h1 className="todolist-title">To-do Lists</h1>
             <ListForm onSubmit={addList} />
             <List 
                 lists={lists} 

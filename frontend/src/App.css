@@ -25,9 +25,15 @@
     border-radius: 10px;
     padding-bottom: 32px;
   }
-  
-  h1 {
+
+  .todolist-title {
     margin: 32px 0;
+    color: #fff;
+    font-size: 24px;
+  }
+
+  .tasklist-title {
+    margin: 8px 0px 32px 0px;
     color: #fff;
     font-size: 24px;
   }
@@ -149,4 +155,10 @@
   .redirect-icon {
     color: #fff;
     padding-top: 5px;
+  }
+
+  .back-icon {
+    color: #fff;
+    font-size: 36px;
+    padding-top: 10px;
   }
