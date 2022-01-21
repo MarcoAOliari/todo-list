@@ -95,7 +95,7 @@ module.exports = {
             }
 
             return res.status(200).json({
-                todolist: results.rows[0]
+                task: results.rows[0]
             });
 
         } catch (err) {

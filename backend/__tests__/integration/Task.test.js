@@ -75,7 +75,7 @@ describe('PUT /task/:id/title', () => {
             });
 
         expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('todolist'); ////////
+        expect(response.body).toHaveProperty('task'); ////////
     });
 
     it('deveria retornar código 204 (id não cadastrado no banco)', async () => {

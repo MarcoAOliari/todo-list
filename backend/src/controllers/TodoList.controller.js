@@ -5,7 +5,7 @@ module.exports = {
     async index(req, res) {
         try {
             const results = await db.query(
-                'SELECT * FROM todolists'
+                'SELECT * FROM todolists ORDER BY id'
             );
 
             res.status(200).json({
