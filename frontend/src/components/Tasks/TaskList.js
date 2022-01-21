@@ -3,8 +3,8 @@ import { useParams } from 'react-router';
 
 import api from '../../services/api';
 
-import TodoForm from './TodoForm';
-import Todo from './Todo';
+import TaskForm from './TaskForm';
+import Task from './Task';
 
 function TodoList() {
     const [todos, setTodos] = useState([]);
@@ -112,8 +112,8 @@ function TodoList() {
     return (
         <div>
             <h1>{todoTitle ? todoTitle : ' - '}</h1>
-            <TodoForm onSubmit={addTodo} />
-            <Todo 
+            <TaskForm onSubmit={addTodo} />
+            <Task 
                 todos={todos} 
                 completeTodo={completeTodo} 
                 removeTodo={removeTodo}
