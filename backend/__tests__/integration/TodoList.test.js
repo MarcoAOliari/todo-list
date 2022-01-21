@@ -44,9 +44,16 @@ describe('GET /todolist/:id', () => {
         expect(response.body).toHaveProperty('tasks');
     });
 
-    it('deveria retornar código 400', async () => {
+    it('deveria retornar código 400 (id não existe no banco)', async () => {
         const response = await request(app)
             .get('/todolist/1000');
+
+        expect(response.status).toBe(400);
+    });
+
+    it('deveria retornar código 400 (id inválido)', async () => {
+        const response = await request(app)
+            .get('/todolist/asdasdad');
 
         expect(response.status).toBe(400);
     });
@@ -55,7 +62,7 @@ describe('GET /todolist/:id', () => {
 describe('PUT /todolist/:id', () => {
     it('deveria retornar a to-do list com título atualizado', async () => {
         const response = await request(app)
-            .put('/todolist/10') ////////
+            .put('/todolist/8') ////////
             .send({
                 title: 'teste'
             });
@@ -74,9 +81,19 @@ describe('PUT /todolist/:id', () => {
             expect(response.status).toBe(204);
     });
 
-    it('deveria retornar código 400', async () => {
+    it('deveria retornar código 400 (id não existe no banco)', async () => {
         const response = await request(app)
             .put('/todolist/1000')
+            .send({
+                title: undefined
+            });
+        
+            expect(response.status).toBe(400);
+    });
+
+    it('deveria retornar código 400 (id inválido)', async () => {
+        const response = await request(app)
+            .put('/todolist/asdads')
             .send({
                 title: undefined
             });
@@ -91,5 +108,12 @@ describe('DELETE /todolist/:id', () => {
             .delete('/todolist/1000');
 
         expect(response.status).toBe(400);
-    })
-})
+    });
+
+    it('deveria retornar código 400 (id inválido)', async () => {
+        const response = await request(app)
+            .delete('/todolist/asdasd');
+
+        expect(response.status).toBe(400);
+    });
+});
