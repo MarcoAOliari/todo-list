@@ -2,14 +2,14 @@ const request = require('supertest');
 const app = require('../../src/app');
 
 describe('GET /todolist', () => {
-    it('deveria retornar todas as todolists', async () => {
+    it('deveria retornar todas as todo-lists', async () => {
         const response = await request(app)
             .get('/todolist');
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('todolists');
-    })
-})
+    });
+});
 
 describe('POST /todolist', () => {
     it('deveria cadastrar um novo usuário', async () => {
@@ -46,7 +46,7 @@ describe('GET /todolist/:id', () => {
 
     it('deveria retornar código 400', async () => {
         const response = await request(app)
-            .get('/todolist/-1');
+            .get('/todolist/1000');
 
         expect(response.status).toBe(400);
     });
@@ -55,7 +55,7 @@ describe('GET /todolist/:id', () => {
 describe('PUT /todolist/:id', () => {
     it('deveria retornar a to-do list com título atualizado', async () => {
         const response = await request(app)
-            .put('/todolist/10')
+            .put('/todolist/10') ////////
             .send({
                 title: 'teste'
             });
@@ -66,7 +66,7 @@ describe('PUT /todolist/:id', () => {
 
     it('deveria retornar código 204', async () => {
         const response = await request(app)
-            .put('/todolist/-1')
+            .put('/todolist/1000')
             .send({
                 title: 'teste'
             });
@@ -76,7 +76,7 @@ describe('PUT /todolist/:id', () => {
 
     it('deveria retornar código 400', async () => {
         const response = await request(app)
-            .put('/todolist/-1')
+            .put('/todolist/1000')
             .send({
                 title: undefined
             });
@@ -86,9 +86,9 @@ describe('PUT /todolist/:id', () => {
 });
 
 describe('DELETE /todolist/:id', () => {
-    it('deveria retornar código 400', async () => {
+    it('deveria retornar código 400 (id inexistente no banco)', async () => {
         const response = await request(app)
-            .delete('/todolist/-1');
+            .delete('/todolist/1000');
 
         expect(response.status).toBe(400);
     })
