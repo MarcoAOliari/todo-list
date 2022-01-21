@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon ./src/index.js"
+    "test": "./node_modules/.bin/jest",
+    "dev": "nodemon ./src/server.js --ignore __tests__",
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,8 @@
     "pg": "^8.7.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "jest": "^27.4.7",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
   }
 }
